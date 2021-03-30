@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.client.RestTemplate;
 import com.ltts.project.Dao.*;
 import com.ltts.project.model.*;
 
@@ -33,6 +33,8 @@ public class HomeController {
 	ComplaintDao cd;
 	@Autowired
 	departmentDao dd;
+	@Autowired
+	RestTemplate rt;
 	@RequestMapping("/hi")
 	public String firstMethod() {
 		return "Hello SpringBoot";
@@ -303,6 +305,30 @@ public class HomeController {
 		return mv;
 
 	}
-
+	 @GetMapping("/compdetails")
+		public List<Complaint> getExternalComp(){
+			
+			
+			ResponseEntity<Complaint[]> response =
+					  rt.getForEntity(
+					  "http://localhost:8966/complaint/",
+					  Complaint[].class);
+			Complaint[] players = response.getBody();
+					List<Complaint> pl=Arrays.asList(players);
+					return pl;
+		}
+	  
+	  @GetMapping("/deptdetails")
+		public List<Department> getExternalDept(){
+			
+			
+			ResponseEntity<Department[]> response =
+					  rt.getForEntity(
+					  "http://localhost:8800/viewdepartments/",
+					  Department[].class);
+			Department[] players = response.getBody();
+					List<Department> pl=Arrays.asList(players);
+					return pl;
+		}
 
 }
