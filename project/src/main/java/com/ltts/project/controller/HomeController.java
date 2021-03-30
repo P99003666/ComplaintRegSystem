@@ -305,7 +305,8 @@ public class HomeController {
 		return mv;
 
 	}
-	 @GetMapping("/compdetails")
+	 
+	@GetMapping("/compdetails")
 		public List<Complaint> getExternalComp(){
 			
 			
@@ -318,7 +319,8 @@ public class HomeController {
 					return pl;
 		}
 	  
-	  @GetMapping("/deptdetails")
+	
+	@GetMapping("/deptdetails")
 		public List<Department> getExternalDept(){
 			
 			
